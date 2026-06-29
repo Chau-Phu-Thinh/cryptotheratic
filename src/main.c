@@ -41,7 +41,7 @@
 #define MAX_INPUTS 512
 #define MAX_SEGMENTS 10
 #define MAX_ADDENDS 32
-/* ── Token / Op types ──────────────────────────────────────────────────── */
+
 typedef enum { OP_ADD, OP_SUB, OP_MUL, OP_DIV } Op;
 typedef enum { TK_WORD, TK_OP, TK_EQ, TK_END } TKind;
 
@@ -133,7 +133,6 @@ static void register_letter(char c) {
   S.letters[S.nletters++] = c;
 }
 
-/* ── Lexer ─────────────────────────────────────────────────────────────── */
 static void lex(const char *src) {
   S.ntokens = 0;
   S.nletters = 0;
@@ -266,10 +265,11 @@ static const char *op_sym[] = {"+", "-", "×", "÷"};
 
 static void print_solution(void) {
   S.nsolutions++;
-  printf("\n  Solution [#%d]\n", S.nsolutions);
+  printf("\n  Solution [#%d]   +---------+\n", S.nsolutions);
   for (int i = 0; i < S.nletters; i++)
-    printf("                  │ %c  →  %d │\n", S.letters[i],
+    printf("                  | %c  →  %d |\n", S.letters[i],
            S.digit[(unsigned char)(S.letters[i] - 'A')]);
+  printf("                  +---------+\n");
   printf("\n  Equation: ");
   for (int i = 0; i < S.ntokens - 1; i++) {
     Token *tk = &S.tokens[i];
@@ -364,7 +364,6 @@ static int detect_long_mul(void) {
     strcpy(S.lm_partials[S.lm_npartials++], S.tokens[i++].word);
   }
 
-  /* = PRODUCT */
   if (S.tokens[i].kind != TK_EQ)
     return 0;
   i++;
@@ -433,7 +432,6 @@ static int evaluate_long_mul(void) {
   return (computed_product == product && multiplicand * multiplier == product);
 }
 
-/* ── Column builder ────────────────────────────────────────────────────── */
 static void build_columns(void) {
   int maxlen = (int)strlen(S.result);
   for (int a = 0; a < S.nadd; a++) {
@@ -656,14 +654,14 @@ static void generic_solve(int idx) { generic_solve_with(idx, evaluate); }
 int main(void) {
   char input[MAX_INPUTS];
 
-  printf("╔═════════════════════════════════════════╗\n");
-  printf("║       Cryptarithmetic Solver            ║\n");
-  printf("╠═════════════════════════════════════════╣\n");
-  printf("║  · Each word ≤ %d letters                ║\n", MAX_WORD_LEN);
-  printf("║  · Each letter → unique digit 0–9       ║\n");
-  printf("║  · Operators: + - * / x =               ║\n");
-  printf("║  · Long-mul: W1*W2 = P0+P1+...= PROD    ║\n");
-  printf("╚═════════════════════════════════════════╝\n");
+  printf("+-----------------------------------------+\n");
+  printf("|         Cryptarithmetic Solver          |\n");
+  printf("+-----------------------------------------+\n");
+  printf("|  · Each word ≤ %d letters                |\n", MAX_WORD_LEN);
+  printf("|  · Each letter → unique digit 0–9       |\n");
+  printf("|  · Operators: + - * / x =               |\n");
+  printf("|  · Long-mul: W1*W2 = P0+P1+...= PROD    |\n");
+  printf("+-----------------------------------------+\n");
   printf("\n  Examples:\n");
   printf("    SEND + MORE = MONEY\n");
   printf("    ABC * DE = FEC + DEC = HGBC\n");
@@ -691,8 +689,8 @@ int main(void) {
     build_columns();
 
     /* Show column layout */
-    printf("\n  ┌──────────────────────── Column layout ────────────"
-           "─────────────┐\n");
+    printf("\n  +------------------------ Column layout ------------"
+           "-------------+\n");
     for (int k = 0; k < S.ncols; k++) {
       ColDesc *cd = &S.cols[k];
       if (cd->n == 0)
@@ -718,7 +716,7 @@ int main(void) {
       printf("\n");
     }
     printf("  "
-           "└────────────────────────────────────────────────────────────────┘"
+           "+----------------------------------------------------------------+"
            "\n");
 
   } else if (S.is_longmul) {
@@ -746,12 +744,13 @@ int main(void) {
   else
     generic_solve(0);
 
-  printf("\n╔════════════════════════════════════════════╗\n");
+  printf("\n  +--------------------------------------------+\n");
   if (S.nsolutions == 0)
-    printf("║          No solutions found.               ║\n");
+    printf("  |          No solutions found.               |\n");
   else
-    printf("║  Found:               %-2d solution(s)       ║\n", S.nsolutions);
-  printf("╚════════════════════════════════════════════╝\n");
+    printf("  |  Found:                  %-2d    solution(s) |\n",
+           S.nsolutions);
+  printf("  +--------------------------------------------+\n");
 
   return EXIT_SUCCESS;
 }
