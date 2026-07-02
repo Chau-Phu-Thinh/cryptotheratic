@@ -329,7 +329,7 @@ val(ABC) × val(DE)  = val(HGBC)         ✓
 
 ---
 
-## Part 3: Design, Data Structures & C Implementation
+## Part 3: Design, Data Structures & Implementation
 
 ### 3.1 Core Data Structures
 
@@ -506,7 +506,7 @@ static int evaluate_long_mul(void) {
 
 ```bash
 # Compile (from project root)
-make
+make run
 
 # Run
 ./bin/main
