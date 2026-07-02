@@ -62,13 +62,13 @@ Without intelligent pruning, checking all 1.8 million candidates and verifying e
 
 ### 1.4 Goal
 
-> **Analyze, from a scientific perspective**, the `ABC * DE = FEC + DEC = HGBC`
-> cryptarithmetic puzzle by:
->
-> 1. Formally modeling it as a **Constraint Satisfaction Problem (CSP)**.
-> 2. Designing and applying **Backtracking** with **pruning** techniques.
-> 3. Tracing the **Long-Multiplication CSP** solver.
-> 4. Evaluating **time and space complexity** and measuring empirical performance.
+**Analyze, from a scientific perspective**, the `ABC * DE = FEC + DEC = HGBC`
+cryptarithmetic puzzle by:
+
+1.  Formally modeling it as a **Constraint Satisfaction Problem (CSP)**.
+2.  Designing and applying **Backtracking** with **pruning** techniques.
+3.  Tracing the **Long-Multiplication CSP** solver.
+4.  Evaluating **time and space complexity** and measuring empirical performance.
 
 ---
 
