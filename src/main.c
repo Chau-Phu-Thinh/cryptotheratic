@@ -74,21 +74,18 @@ typedef struct {
 } ColDesc;
 
 typedef struct {
-  /* Tokens */
   Token tokens[MAX_TOKENS];
   int ntokens;
-  int cur;
+  int cur; // cursor ,  For example : ABC + DEF = BSF, tokens.word = "DEF" & cur
+           // = 3
 
-  /* Letters */
   char letters[MAX_LETTERS];
   int nletters;
 
-  /* Assignment */
   int digit[26];
   int used[10];
   int leading[26];
 
-  /* Results */
   int nsolutions;
 
   /* Column-CSP data (mode: addition) */
